@@ -1,0 +1,49 @@
+from django.shortcuts import render
+
+
+def index(request):
+    name = "นักศึกษา"
+    fruits = ['แอปเปิ้ล', 'กล้วย', 'ส้ม', 'มะม่วง']
+    score = 85
+    context = {
+        'name': name,
+        'fruits': fruits,
+        'score': score,
+    }
+    return render(request, 'myapp/index.html', context)
+
+
+def form_view(request):
+    result = None
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        score_str = request.POST.get('score', '0')
+        try:
+            score = int(score_str)
+        except ValueError:
+            score = 0
+
+        if score >= 80:
+            grade = 'A'
+            status = 'ผ่าน'
+        elif score >= 70:
+            grade = 'B'
+            status = 'ผ่าน'
+        elif score >= 60:
+            grade = 'C'
+            status = 'ผ่าน'
+        elif score >= 50:
+            grade = 'D'
+            status = 'ผ่าน'
+        else:
+            grade = 'F'
+            status = 'ไม่ผ่าน'
+
+        result = {
+            'name': name,
+            'score': score,
+            'grade': grade,
+            'status': status,
+        }
+
+    return render(request, 'myapp/form.html', {'result': result})
